@@ -4,8 +4,12 @@ import React from 'react'
 const Layout = ({ children }:{ children: React.ReactNode }) => {
   return (
 
-    <Navbar/>
-    <div>Children</div>
+    <div>
+
+      <Navbar /> 
+      {children}
+
+    </div>
   )
 }
 
