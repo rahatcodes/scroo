@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'images/2x/CSEFESTArtboard 1@2x.png'
+import Image from 'icons/logo.png.png'
 
 const Page = () => {
   return (
