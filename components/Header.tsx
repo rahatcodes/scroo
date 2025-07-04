@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ICONS } from '@/constants'
 
 const Header = ({subHeader,title,userImg} : SharedHeaderProps) => {
   return (
@@ -22,6 +23,14 @@ const Header = ({subHeader,title,userImg} : SharedHeaderProps) => {
             <Image src='/assets/icons/upload.svg' alt='Upload Icon' width={16} height={16} />
             <span>Upload A Video</span>
           </Link>
+
+          <div className='record'>
+            <button className='primary-btn'>
+              <Image src={ICONS.record} alt='Record Icon' width={16} height={16} />
+              <span>Record A Video</span>
+            </button>
+
+          </div>
         </aside>
 
       </section>
