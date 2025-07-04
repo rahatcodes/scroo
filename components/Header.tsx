@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import DropDownList from './DropDownList'
 import { ICONS } from '@/constants'
 
 const Header = ({subHeader,title,userImg} : SharedHeaderProps) => {
@@ -34,6 +35,17 @@ const Header = ({subHeader,title,userImg} : SharedHeaderProps) => {
         </aside>
 
       </section>
+
+      <section className='search-filter'>
+        <div className='search'>
+          <input type='text' placeholder='Search for videos, tags, folders ...' />
+          <Image src='/assets/icons/search.svg' alt='Search Icon' width={16} height={16} />
+        </div>
+
+       <DropDownList />
+       
+      </section>
+
     </header>
   )
 }
