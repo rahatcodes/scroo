@@ -1,36 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
-import aj, { createMiddleware, detectBot, shield } from "./lib/arcjet";
 
 export async function middleware(request: NextRequest) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  // Skip authentication for public routes
+  const publicPaths = ['/sign-in', '/sign-up', '/api/auth', '/_next', '/favicon.ico'];
+  const isPublicPath = publicPaths.some(path => request.nextUrl.pathname.startsWith(path));
+  
+  if (isPublicPath) {
+    return NextResponse.next();
+  }
 
-  if (!session) {
+  // Check for session using cookies instead of auth.api to reduce bundle size
+  const sessionCookie = request.cookies.get('better-auth.session_token');
+  
+  if (!sessionCookie) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
   return NextResponse.next();
 }
-const validate = aj
-  .withRule(
-    shield({
-      mode: "LIVE",
-    })
-  )
-  .withRule(
-    detectBot({
-      mode: "LIVE",
-      allow: ["CATEGORY:SEARCH_ENGINE", "G00G1E_CRAWLER"], // allow other bots if you want to.
-    })
-  );
-
-export default createMiddleware(validate);
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|sign-in|assets).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|sign-in|sign-up|assets).*)"],
 };
-
-// ⨯ [TypeError: Body is unusable: Body has already been read]
