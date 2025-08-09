@@ -45,13 +45,13 @@ const SignIn = () => {
                 className="rounded-full"
               />
               <div>
-                <h2>Jason Rivera</h2>
-                <p>Product Designer, NovaByte</p>
+                <h2>Rahat Talukder</h2>
+                <p>Product Designer, NoJobs</p>
               </div>
             </article>
           </section>
         </div>
-        <p>© Snapcast 2025</p>
+        <p>© Scroo 2025</p>
       </aside>
       <aside className="google-sign-in">
         <section>
@@ -62,10 +62,10 @@ const SignIn = () => {
               width={40}
               height={40}
             />
-            <h1>SnapCast</h1>
+            <h1>Scroo</h1>
           </Link>
           <p>
-            Create and share your very first <span>SnapCast video</span> in no
+            Create and share your very first <span>Scroo video</span> in no
             time!
           </p>
 
