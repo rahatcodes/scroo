@@ -1,7 +1,6 @@
 import aj, {
   ArcjetDecision,
   shield,
-  slidingWindow,
   validateEmail,
 } from "@/lib/arcjet";
 import ip from "@arcjet/ip";
@@ -13,15 +12,6 @@ const emailValidation = aj.withRule(
   validateEmail({
     mode: "LIVE",
     block: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
-  })
-);
-
-const rateLimit = aj.withRule(
-  slidingWindow({
-    mode: "LIVE",
-    interval: "2m",
-    max: 2,
-    characteristics: ["fingerprint"],
   })
 );
 
@@ -49,11 +39,6 @@ const protectedAuth = async (req: NextRequest): Promise<ArcjetDecision> => {
       });
     }
   }
-  if (!req.nextUrl.pathname.startsWith("/api/auth/sign-out")) {
-    return rateLimit.protect(req, {
-      fingerprint: userId,
-    });
-  }
   return shieldValidation.protect(req);
 };
 
@@ -66,9 +51,6 @@ export const POST = async (req: NextRequest) => {
   if (decision.isDenied()) {
     if (decision.reason.isEmail()) {
       throw new Error("Email validation failed");
-    }
-    if (decision.reason.isRateLimit()) {
-      throw new Error("Rate limit exceeded");
     }
     if (decision.reason.isShield()) {
       throw new Error("Shield validation failed");
